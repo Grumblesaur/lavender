@@ -14,7 +14,10 @@ typedef struct obj {
   unsigned char readonly    : 1;
   unsigned char initialized : 1;
   unsigned char overflowed  : 1;
-  unsigned char             : 5;
+  unsigned char has_length  : 1;
+  unsigned char             : 4;
+  unsigned int  length;
+  unsigned int  size;
   union {
     char *        s;
     double        r;
