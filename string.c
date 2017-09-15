@@ -56,7 +56,7 @@ unsigned str_load(char * dest, char * src, unsigned src_len) {
 /* create a new string by combining two others */
 obj * str_concat(obj * left, obj * right) {
   unsigned new_len = left->length + right->length;
-  char * buffer = malloc(new_len * sizeof(char));
+  char * buffer = malloc((new_len + 1) * sizeof(char)); // +1 counts temp '\0'
   strcat(buffer, left->s);
   strcat(buffer, right->s);
   obj * o = str_init(buffer, false);
@@ -64,8 +64,24 @@ obj * str_concat(obj * left, obj * right) {
   return o;
 }
 
+/* create a new string by repeating it the number of times specified
+ * by the integer object
+ */
+obj * str_repeat(obj * string, obj * integer) {
+  unsigned new_len = string->length * integer->i;
+  char * buffer = malloc((new_len + 1) * sizeof(char)); // +1 counts temp '\0'
+  for (unsigned u = 0; u < integer->i; u++) {
+    strcat(buffer, string->s);
+  }
+  obj * out = str_init(buffer, false);
+  free(buffer);
+  return out;
+}
 
-
+/* get internal C-string value from a string object */
+char * str_get(obj * in) {
+  return in->header == STRING_T ? in->s : NULL;
+}
 
 
 

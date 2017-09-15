@@ -17,7 +17,6 @@ typedef struct obj {
   unsigned char has_length  : 1;
   unsigned char             : 4;
   unsigned int  length;
-  unsigned int  size;
   union {
     char *        s;
     double        r;
@@ -25,8 +24,6 @@ typedef struct obj {
     long          i;
     struct obj *  v;
 } obj;
-
-
 
 
 #endif
